@@ -1,9 +1,8 @@
-// api/chat.js
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({ reply: "Method not allowed" });
+    return res.status(405).json({ reply: "⚠️ Method not allowed" });
   }
 
   try {
@@ -19,9 +18,9 @@ export default async function handler(req, res) {
     const result = await model.generateContent([{ text: message }]);
     const reply = result.response.text();
 
-    return res.status(200).json({ reply });
+    res.status(200).json({ reply });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ reply: "⚠️ Gagal dapet jawaban dari Gemini" });
+    console.error("Error:", error);
+    res.status(500).json({ reply: "⚠️ Gagal dapet jawaban dari Gemini" });
   }
 }
