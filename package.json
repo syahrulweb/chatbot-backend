@@ -2,9 +2,6 @@
   "name": "chatbot-backend",
   "version": "1.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "vercel dev"
-  },
   "dependencies": {
     "@google/generative-ai": "^0.24.1"
   }
