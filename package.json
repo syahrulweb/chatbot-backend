@@ -1,6 +1,7 @@
 {
   "name": "chatbot-backend",
   "version": "1.0.0",
+  "main": "api/chat.js",
   "type": "module",
   "dependencies": {
     "@google/generative-ai": "^0.24.1"
