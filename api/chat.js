@@ -2,7 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export default async function handler(req, res) {
   // CORS
-  res.setHeader("Access-Control-Allow-Origin", "https://syahrulweb.github.io"); 
+  res.setHeader("Access-Control-Allow-Origin", "https://syahrulweb.github.io");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
@@ -20,15 +20,19 @@ export default async function handler(req, res) {
       return res.status(400).json({ reply: "⚠️ message harus berupa string" });
     }
 
+    // Ambil API Key dari env
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+    // Pakai model Gemini Flash (gratisan)
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    const result = await model.generateContent([{ text: message }]);
+    // Generate konten (cukup pake string, ga perlu array)
+    const result = await model.generateContent(message);
     const reply = result.response.text();
 
-    res.status(200).json({ reply });
+    return res.status(200).json({ reply });
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).json({ reply: "⚠️ Gagal dapet jawaban dari Gemini" });
+    return res.status(500).json({ reply: "⚠️ Gagal dapet jawaban dari Gemini" });
   }
 }
